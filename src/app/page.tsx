@@ -5,12 +5,14 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@/components/Form/Label";
 import { Form } from "@/components/Form";
+import { Dialog } from "@/components/Dialog";
 
 export default function Home() {
   const userLoginSchema = z.object({
     email: z
       .string()
-      .email("Formato de email inválido").toLowerCase()
+      .email("Formato de email inválido")
+      .toLowerCase()
       .min(1, "É preciso preencher o email"),
     password: z.string().min(6, "A senha precisa ter no mínimo 6 caracteres"),
   });
@@ -22,7 +24,6 @@ export default function Home() {
   });
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = loginUserForm;
@@ -33,12 +34,8 @@ export default function Home() {
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <div className="shadow-default w-[448px] flex flex-col rounded-lg p-6">
-        <div className="flex gap-[6px] flex-col">
-          <h1 className="text-base leading-6 font-semibold">Login</h1>
-          <p className="text-[14px] text-graphite">Acesse sua conta</p>
-        </div>
-
+      <Dialog.Wrapper>
+        <Dialog.Headline title={"Login"} description={"Acesse sua conta"} />
         <FormProvider {...loginUserForm}>
           <form className="flex flex-col" onSubmit={handleSubmit(loginUser)}>
             <Form.WrapperInput>
@@ -67,7 +64,7 @@ export default function Home() {
             <Form.Button type="submit">Logar</Form.Button>
           </form>
         </FormProvider>
-      </div>
+      </Dialog.Wrapper>
     </div>
   );
 }
