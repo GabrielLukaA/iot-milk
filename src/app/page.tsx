@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@/components/Form/Label";
 import { Form } from "@/components/Form";
 import { Dialog } from "@/components/Dialog";
+import Link from "next/link";
 
 export default function Home() {
   const userLoginSchema = z.object({
@@ -35,7 +36,18 @@ export default function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <Dialog.Wrapper>
-        <Dialog.Headline title={"Login"} description={"Acesse sua conta"} />
+        <Dialog.Headline
+          redirect={
+            <Link
+              className="text-xs text-secondary underline"
+              href={"/cadastro"}
+            >
+              Crie sua conta
+            </Link>
+          }
+          title={"Login"}
+          description={"Acesse sua conta"}
+        />
         <FormProvider {...loginUserForm}>
           <form className="flex flex-col" onSubmit={handleSubmit(loginUser)}>
             <Form.WrapperInput>
@@ -61,7 +73,9 @@ export default function Home() {
               )}
             </Form.WrapperInput>
 
-            <Form.Button type="submit">Logar</Form.Button>
+            <Form.Button className="mt-4" type="submit">
+              Logar
+            </Form.Button>
           </form>
         </FormProvider>
       </Dialog.Wrapper>
