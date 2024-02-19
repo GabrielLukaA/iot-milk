@@ -3,6 +3,7 @@ import { Input } from "./Input";
 import { Label } from "./Label";
 import { WrapperInput } from "./WrapperInput";
 import { Error } from "./Error";
+import { SmallButton } from "./SmallButton";
 
 
 export const Form = {
@@ -10,5 +11,6 @@ export const Form = {
   Input,
   WrapperInput,
   Button,
-  Error
+  Error,
+  SmallButton,
 };
