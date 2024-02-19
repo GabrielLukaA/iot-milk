@@ -7,8 +7,29 @@ import { Label } from "@/components/Form/Label";
 import { Form } from "@/components/Form";
 import { Dialog } from "@/components/Dialog";
 import Link from "next/link";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { CartItem } from "@/types/cart-item";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  const { getLocalStorage, setLocalStorage } = useLocalStorage<CartItem[]>()
+const cartItem:CartItem = {
+  product:{
+    id:1,
+    name:"Leite UHT integral",
+    price:23.99
+  },
+  quantity:23
+}
+
+const cartItems:CartItem[] = [cartItem] 
+  setLocalStorage('cart-items', cartItems)
+
+  useEffect(()=>{
+  console.log( getLocalStorage('cart-items'))
+  },[])
+
   const userLoginSchema = z.object({
     email: z
       .string()
