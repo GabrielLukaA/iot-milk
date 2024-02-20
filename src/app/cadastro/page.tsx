@@ -10,6 +10,46 @@ import Link from "next/link";
 import axios from "axios";
 import { useCep } from "@/hooks/useCep";
 export default function Signup() {
+  type User = {
+    name: string;
+    password: string;
+    email: string;
+    address: Adress[];
+    orders?: Order[];
+  };
+
+  type ViaCep = {
+    bairro: string;
+    cep: string;
+    complemento: "";
+    ddd: "47";
+    gia: "";
+    ibge: "4208906";
+    localidade: string;
+    logradouro: string;
+    siafi: string;
+    uf: string;
+  };
+
+  type Order = {
+    price: number;
+    user: User;
+    productBatches: ProductBatch[];
+  };
+
+  type ProductBatch = {
+    productName: string;
+    unitPrice: number;
+    expirationDate: Date;
+    fabricationDate: Date;
+  };
+  type Adress = {
+    state: string;
+    city: string;
+    street: string;
+    number: number;
+  };
+
   const getData = async (cep: string) => {
     const response = (await axios.get(`https://viacep.com.br/ws/${cep}/json/`))
       .data;
@@ -29,7 +69,7 @@ export default function Signup() {
         }
       })
     );
-  
+
     // Verificar se algum resultado é verdadeiro (erro) e retornar true
     if (results.includes(true)) {
       return true;
@@ -37,14 +77,36 @@ export default function Signup() {
       return false;
     }
   };
-  const signupUser = async(data: SignupUserData) => {
+  const signupUser = async (data: SignupUserData) => {
     let counter = await verify(data);
-    
-    console.log( counter);
+
+    console.log(counter);
     if (counter) {
       console.log("Não fui nem fundendo");
     } else {
-      
+      const address: any[] = await Promise.all(
+        data.addresses.map(async (address) => {
+          let viacepResponse: ViaCep = await getData(address.cep.toString());
+          if (viacepResponse) {
+            return {
+              state: viacepResponse.uf,
+              city: viacepResponse.localidade,
+              street: viacepResponse.logradouro,
+              number: address.number,
+            };
+          } else {
+            return null;
+          }
+        })
+      );
+      const user: User = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        address: address,
+      };
+      console.log(user);
+      await axios.post("http://10.4.96.2:9090/user", user);
       window.location.href = "/"
     }
   };

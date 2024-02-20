@@ -9,26 +9,28 @@ import { Dialog } from "@/components/Dialog";
 import Link from "next/link";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { CartItem } from "@/types/cart-item";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Home() {
+  const [errorLogin, setErrorLogin] = useState("");
 
-  const { getLocalStorage, setLocalStorage } = useLocalStorage<CartItem[]>()
-const cartItem:CartItem = {
-  product:{
-    id:1,
-    name:"Leite UHT integral",
-    price:23.99
-  },
-  quantity:23
-}
+  const { getLocalStorage, setLocalStorage } = useLocalStorage<CartItem[]>();
+  const cartItem: CartItem = {
+    product: {
+      id: 1,
+      name: "Leite UHT integral",
+      price: 23.99,
+    },
+    quantity: 23,
+  };
 
-const cartItems:CartItem[] = [cartItem] 
-  setLocalStorage('cart-items', cartItems)
+  const cartItems: CartItem[] = [cartItem];
+  setLocalStorage("cart-items", cartItems);
 
-  useEffect(()=>{
-  console.log( getLocalStorage('cart-items'))
-  },[])
+  useEffect(() => {
+    console.log(getLocalStorage("cart-items"));
+  }, []);
 
   const userLoginSchema = z.object({
     email: z
@@ -48,10 +50,23 @@ const cartItems:CartItem[] = [cartItem]
   const {
     handleSubmit,
     formState: { errors },
+    resetField
   } = loginUserForm;
 
-  function loginUser(data: UserLoginData) {
-    console.log(data);
+  async function loginUser(data: UserLoginData) {
+    const user = await (
+      await axios.get(
+        `http://10.4.96.2:9090/user/login/${data.email}/${data.password}`
+      )
+    ).data;
+    if (user) {
+      setLocalStorage("logged-user", user)
+      window.location.href = "/produtos"
+    } else {
+      setErrorLogin("Email ou senha incorretos")
+      resetField("email")
+      resetField("password")
+    }
   }
 
   return (
@@ -69,6 +84,8 @@ const cartItems:CartItem[] = [cartItem]
           title={"Login"}
           description={"Acesse sua conta"}
         />
+        {errorLogin &&
+          <Form.Error>{errorLogin}</Form.Error>}
         <FormProvider {...loginUserForm}>
           <form className="flex flex-col" onSubmit={handleSubmit(loginUser)}>
             <Form.WrapperInput>
