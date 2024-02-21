@@ -1,0 +1,1 @@
+export { DialogProducts } from "./DialogProducts";

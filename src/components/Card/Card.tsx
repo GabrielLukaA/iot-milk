@@ -1,13 +1,15 @@
 import { HiShoppingCart } from "react-icons/hi";
 import { Form } from "../Form";
 import Image from "next/image";
+import { ReactNode } from "react";
 
 interface CardProps {
   productName: string;
   price: number;
+  children: ReactNode
 }
 
-export const Card = ({ productName, price }: CardProps) => {
+export const Card = ({ productName, price, children }: CardProps) => {
   const calcDiscount = (price: number, percent: number) => {
     const fullPercent = 100;
     return (price / fullPercent) * percent;
@@ -44,7 +46,7 @@ export const Card = ({ productName, price }: CardProps) => {
           </p>
         </div>
         <div className="flex items-center gap-4 h-10">
-          <Form.Button className="flex-1">Comprar</Form.Button>
+         {children}
           <div className="rounded-[6px] bg-secondary w-[48px] h-[40px] flex items-center justify-center">
             <HiShoppingCart size={"24"} color="#FCFCFC" />
           </div>
