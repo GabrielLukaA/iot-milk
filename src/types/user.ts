@@ -5,6 +5,6 @@ export   type User = {
   name: string;
   password: string;
   email: string;
-  address: Address[];
+  addresses: Address[];
   orders?: Order[];
 };

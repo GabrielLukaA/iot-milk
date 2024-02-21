@@ -10,6 +10,17 @@
   border-bottom: none; /* Remove a borda inferior da última div dentro da div com classe container-lotes */
 }
 
+
+.container-lotes::-webkit-scrollbar {
+  width: 8px; /* Largura da scrollbar */
+}
+.container-lotes::-webkit-scrollbar-thumb {
+  background-color: #888; /* Cor do thumb (barra de rolagem) */
+  border-radius: 4px; /* Borda arredondada */
+}
+.container-lotes::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Cor de fundo da scrollbar */
+}
 /* .container-lotes:last-child {
   border: 0px;
 } */
@@ -21,6 +32,11 @@
   -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 }
+.shadow-nao {
+
+  box-shadow: none;
+}
+
 
 .flexive-grid {
   grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));

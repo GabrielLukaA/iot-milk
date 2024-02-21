@@ -9,14 +9,9 @@ import { Form } from "@/components/Form";
 import Link from "next/link";
 import axios from "axios";
 import { useCep } from "@/hooks/useCep";
+import { User } from "@/types";
 export default function Signup() {
-  type User = {
-    name: string;
-    password: string;
-    email: string;
-    address: Adress[];
-    orders?: Order[];
-  };
+
 
   type ViaCep = {
     bairro: string;
@@ -31,24 +26,6 @@ export default function Signup() {
     uf: string;
   };
 
-  type Order = {
-    price: number;
-    user: User;
-    productBatches: ProductBatch[];
-  };
-
-  type ProductBatch = {
-    productName: string;
-    unitPrice: number;
-    expirationDate: Date;
-    fabricationDate: Date;
-  };
-  type Adress = {
-    state: string;
-    city: string;
-    street: string;
-    number: number;
-  };
 
   const getData = async (cep: string) => {
     const response = (await axios.get(`https://viacep.com.br/ws/${cep}/json/`))
@@ -103,7 +80,7 @@ export default function Signup() {
         name: data.name,
         email: data.email,
         password: data.password,
-        address: address,
+        addresses: address,
       };
       console.log(user);
       await axios.post("http://10.4.96.2:9090/user", user);
