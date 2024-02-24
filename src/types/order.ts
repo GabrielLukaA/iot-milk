@@ -7,4 +7,5 @@ export   type Order = {
   user: User;
   productBatch: ProductBatch;
   address:Address;
+  demanded:boolean;
 };

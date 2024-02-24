@@ -30,7 +30,7 @@ export default function Products() {
       <pre>{JSON.stringify(loggedUser)}</pre>
       {modal && (
         <DialogProducts
-          fnClose={() => setModal(prev => !prev)}
+          fnClose={() => setModal((prev) => !prev)}
           product={actualProduct!}
         />
       )}
@@ -40,21 +40,21 @@ export default function Products() {
         {products.map((product) => {
           return (
             <Card
+              key={product.id}
               productName={product.name}
               price={product.price}
-              children={
-                <Form.Button
-                  type="button"
-                  onClick={() => {
-                    setActualProduct(product);
-                    setModal(true);
-                  }}
-                  className="flex-1"
-                >
-                  Comprar
-                </Form.Button>
-              }
-            />
+            >
+              <Form.Button
+                type="button"
+                onClick={() => {
+                  setActualProduct(product);
+                  setModal(true);
+                }}
+                className="flex-1"
+              >
+                Comprar
+              </Form.Button>
+            </Card>
           );
         })}
       </div>

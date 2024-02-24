@@ -29,7 +29,7 @@ export default function Home() {
   setLocalStorage("cart-items", cartItems);
 
   useEffect(() => {
-    console.log(getLocalStorage("cart-items"));
+    // // console.log(getLocalStorage("cart-items"));
   }, []);
 
   const userLoginSchema = z.object({
@@ -50,7 +50,7 @@ export default function Home() {
   const {
     handleSubmit,
     formState: { errors },
-    resetField
+    resetField,
   } = loginUserForm;
 
   async function loginUser(data: UserLoginData) {
@@ -60,12 +60,12 @@ export default function Home() {
       )
     ).data;
     if (user) {
-      setLocalStorage("logged-user", user)
-      window.location.href = "/produtos"
+      setLocalStorage("logged-user", user);
+      window.location.href = "/produtos";
     } else {
-      setErrorLogin("Email ou senha incorretos")
-      resetField("email")
-      resetField("password")
+      setErrorLogin("Email ou senha incorretos");
+      resetField("email");
+      resetField("password");
     }
   }
 
@@ -84,8 +84,7 @@ export default function Home() {
           title={"Login"}
           description={"Acesse sua conta"}
         />
-        {errorLogin &&
-          <Form.Error>{errorLogin}</Form.Error>}
+        {errorLogin && <Form.Error>{errorLogin}</Form.Error>}
         <FormProvider {...loginUserForm}>
           <form className="flex flex-col" onSubmit={handleSubmit(loginUser)}>
             <Form.WrapperInput>

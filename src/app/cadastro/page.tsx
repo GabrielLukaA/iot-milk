@@ -11,8 +11,6 @@ import axios from "axios";
 import { useCep } from "@/hooks/useCep";
 import { User } from "@/types";
 export default function Signup() {
-
-
   type ViaCep = {
     bairro: string;
     cep: string;
@@ -26,11 +24,10 @@ export default function Signup() {
     uf: string;
   };
 
-
   const getData = async (cep: string) => {
     const response = (await axios.get(`https://viacep.com.br/ws/${cep}/json/`))
       .data;
-    console.log(response);
+    // // console.log(response);
     return response;
   };
 
@@ -39,7 +36,7 @@ export default function Signup() {
       data.addresses.map(async (address) => {
         const s: any = await getData(address.cep.toString());
         if (s.erro) {
-          console.log("Não fui");
+          // // console.log("Não fui");
           return true;
         } else {
           return false;
@@ -57,9 +54,9 @@ export default function Signup() {
   const signupUser = async (data: SignupUserData) => {
     let counter = await verify(data);
 
-    console.log(counter);
+    // // console.log(counter);
     if (counter) {
-      console.log("Não fui nem fundendo");
+      // // console.log("Não fui nem fundendo");
     } else {
       const address: any[] = await Promise.all(
         data.addresses.map(async (address) => {
@@ -82,9 +79,9 @@ export default function Signup() {
         password: data.password,
         addresses: address,
       };
-      console.log(user);
+      // // console.log(user);
       await axios.post("http://10.4.96.2:9090/user", user);
-      window.location.href = "/"
+      window.location.href = "/";
     }
   };
   const SignupUserSchema = z
@@ -126,17 +123,17 @@ export default function Signup() {
           if (address.cep.toString().length === 8) {
             data = await getData(address.cep.toString());
           }
-          console.log(data);
+          // // console.log(data);
         } catch (e) {
-          console.log(e);
+          // // console.log(e);
         }
         if (data?.erro) {
           setError(`addresses.${index}`, {
             type: "manual",
             message: "O CEP informado é inválido.",
           });
-          console.log(errors.addresses?.[index]?.message);
-          console.log("Sou o erro atual ein");
+          // // console.log(errors.addresses?.[index]?.message);
+          // // console.log("Sou o erro atual ein");
         } else {
           setError(`addresses.${index}`, {
             type: "manual",
