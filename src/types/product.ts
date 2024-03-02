@@ -1,6 +1,6 @@
 export type Product = {
-  name:string,
-  id:string,
-  price:number,
-  image:File
+  name?:string,
+  id:number,
+  price?:number,
+  image?:File
 }

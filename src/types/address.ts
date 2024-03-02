@@ -3,4 +3,6 @@ export  type Address = {
   city: string;
   street: string;
   number: number;
+  id?:number;
+  cep:string;
 };

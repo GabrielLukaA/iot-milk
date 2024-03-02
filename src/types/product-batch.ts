@@ -1,8 +1,10 @@
+import { Product } from ".";
+
 export  type ProductBatch = {
-  id:number;
-  productName: string;
-  expirationDate: Date;
-  fabricationDate: Date;
-  productQuantity:number;
-  quantityAvailable:number
+  id?:number;
+  product?: Product;
+  expirationDate?: Date;
+  fabricationDate?: Date;
+  productQuantity?:number;
+  quantityAvailable?:number
 };

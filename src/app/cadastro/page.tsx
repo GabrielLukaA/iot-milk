@@ -67,6 +67,7 @@ export default function Signup() {
               city: viacepResponse.localidade,
               street: viacepResponse.logradouro,
               number: address.number,
+              cep: viacepResponse.cep,
             };
           } else {
             return null;

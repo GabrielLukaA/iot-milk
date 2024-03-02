@@ -7,4 +7,5 @@ export   type User = {
   email: string;
   addresses: Address[];
   orders?: Order[];
+  id?:number
 };

@@ -37,7 +37,7 @@ export const DialogProducts = ({ product, fnClose }: DialogProps) => {
       address: user.addresses[0],
       productBatch: selectedBatch!,
       user: user,
-      price: selectedBatch!.productQuantity * product.price,
+      price: selectedBatch!.productQuantity! * product.price!,
       demanded: false 
     };
 
@@ -103,12 +103,12 @@ export const DialogProducts = ({ product, fnClose }: DialogProps) => {
                       setSelectedBatch(null);
                     }
                   }}
-                  quantityAvailable={batch.quantityAvailable}
-                  expirationDate={batch.expirationDate}
+                  quantityAvailable={batch?.quantityAvailable!}
+                  expirationDate={batch?.expirationDate!}
                 />
                 <Batch.Price
-                  price={product.price}
-                  productQuantity={batch.productQuantity}
+                  price={product.price!}
+                  productQuantity={batch.productQuantity!}
                 />
                 {selectedBatch == batch && (
                   <Batch.Quantity>
